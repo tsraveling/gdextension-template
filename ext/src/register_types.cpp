@@ -1,9 +1,6 @@
 #include "register_types.h"
 
-#include "Orbit.h"
-#include "OrbitalBody.h"
-#include "OrbitalModel.h"
-#include "ShipNav.h"
+#include "ExampleEntity.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/class_db.hpp>
@@ -17,10 +14,7 @@ void initialize_module(ModuleInitializationLevel p_level) {
     return;
   }
 
-  ClassDB::register_class<OrbitalModel>();
-  ClassDB::register_class<Orbit>();
-  ClassDB::register_class<OrbitalBody>();
-  ClassDB::register_class<ShipNav>();
+  ClassDB::register_class<ExampleEntity>();
 }
 
 void uninitialize_module(ModuleInitializationLevel p_level) {

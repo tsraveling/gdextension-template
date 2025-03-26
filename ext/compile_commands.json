@@ -1,0 +1,12 @@
+[
+  {
+    "directory": "/Users/tsrav/repos/gdextension-template/ext",
+    "command": "c++ -std=c++17 -I/Users/tsrav/repos/gdextension-template/ext/godot-cpp/include -I/Users/tsrav/repos/gdextension-template/ext/godot-cpp/gen/include -I/Users/tsrav/repos/gdextension-template/ext/godot-cpp/gdextension -I/Users/tsrav/repos/gdextension-template/ext/src -c src/Vector2D.cpp",
+    "file": "src/Vector2D.cpp"
+  },
+  {
+    "directory": "/Users/tsrav/repos/gdextension-template/ext",
+    "command": "c++ -std=c++17 -I/Users/tsrav/repos/gdextension-template/ext/godot-cpp/include -I/Users/tsrav/repos/gdextension-template/ext/godot-cpp/gen/include -I/Users/tsrav/repos/gdextension-template/ext/godot-cpp/gdextension -I/Users/tsrav/repos/gdextension-template/ext/src -c src/register_types.cpp",
+    "file": "src/register_types.cpp"
+  }
+]
