@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+import os
+import sys
+import json
+
+env = SConscript("godot-cpp/SConstruct")
+
+# AddOption for compile_commands.json generation
+AddOption('--compiledb',
+          dest='compiledb',
+          action='store_true',
+          help='Generate compile_commands.json')
+
+# tweak this if you want to use different folders, or more folders, to store your source code in.
+env.Append(CPPPATH=["src/"])
+sources = Glob("src/*.cpp")
+
+if env["platform"] == "macos":
+    library = env.SharedLibrary(
+        "../bin/libst.{}.{}.framework/libst.{}.{}".format(
+            env["platform"], env["target"], env["platform"], env["target"]
+        ),
+        source=sources,
+    )
+elif env["platform"] == "linux":  # for Linux
+    library = env.SharedLibrary(
+        "../bin/libst.{}.{}.so".format(env["platform"], env["target"]),
+        source=sources,
+    )
+else:
+    library = env.SharedLibrary(
+        "../bin/libst{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        source=sources,
+    )
+
+# SConstruct doesn't automatically generate compile_commands.json, which clangd needs to bridge the gap
+# between the build modes, and provide LSP functionality to any editor environment that uses clang (like Vim).
+# VScode handles this on its own, so you don't really need to run --compiledb to get your godot imports working
+# within our local C++ files here.
+if GetOption('compiledb'):
+    print("Generating compile_commands.json...")
+    compile_commands = []
+    
+    # Get absolute path to project root
+    project_root = os.path.abspath(".")
+    
+    # Include paths
+    include_paths = [
+        "-I" + os.path.join(project_root, "godot-cpp/include"),
+        "-I" + os.path.join(project_root, "godot-cpp/gen/include"),
+        "-I" + os.path.join(project_root, "godot-cpp/gdextension"),
+        "-I" + os.path.join(project_root, "src")
+    ]
+    
+    # Add all source files
+    for source in sources:
+        source_path = str(source)
+
+        # These three JSON properties, for each cpp file, tell clang where to find those pesky <godot-cpp> imports.
+        command = {
+            "directory": project_root,
+            "command": "c++ -std=c++17 " + " ".join(include_paths) + " -c " + source_path,
+            "file": source_path
+        }
+        compile_commands.append(command)
+    
+    # Write to file
+    with open("compile_commands.json", "w") as f:
+        json.dump(compile_commands, f, indent=2)
+    
+    print(f"Generated compile_commands.json with {len(compile_commands)} entries")
+
+# Otherwise, build the library as usual
+Default(library)
+
