@@ -8,7 +8,7 @@ This repo is meant to be a template. Clone or download this code, then copy or p
 
 ## Initial Setup
 
-1. Copy the contents of `/ext` in this repo into `{project root}/ext`. You can put it somewhere else if you like, but make sure you modify `setup.sh` to account for that!
+1. Copy the contents of `/ext` in this repo into `{project root}/ext`, leaving out `/ext/godot-cpp` (you will add this to your own project in the correct way in step 2). You can put it somewhere else if you like, but make sure you modify `setup.sh` to account for that!
 2. Run `setup.sh`. This will clone the [godot-cpp repo](https://github.com/godotengine/godot-cpp) into the correct position in your folder structure.
   - Note: if you then clone your repo on a fresh machine, you will need to make sure your submodules are initialized and downloaded with `git submodule update --init --recursive`.
 3. Make sure you have [SConstruct](https://www.scons.org/) installed.
