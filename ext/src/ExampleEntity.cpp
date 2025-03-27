@@ -21,7 +21,9 @@ void ExampleEntity::_bind_methods() {
   ADD_SIGNAL(MethodInfo("did_check_opposite",
                         PropertyInfo(Variant::BOOL, "prev_val")));
 
-  // This is how we bind enums, so that they are useable from the Godot side:
+  // This is how we bind enums, so that they are useable from the Godot side.
+  // Note that for this to work you must first call VARIANT_ENUM_CAST from the
+  // header file for this class.
   BIND_ENUM_CONSTANT(DARK);
   BIND_ENUM_CONSTANT(LIGHT);
 }

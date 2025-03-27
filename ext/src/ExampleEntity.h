@@ -2,7 +2,7 @@
 #ifndef EXAMPLE_ENTITY_H
 #define EXAMPLE_ENTITY_H
 
-#include "godot_cpp/classes/ref.hpp"
+#include <godot_cpp/classes/ref.hpp>
 #include <godot_cpp/classes/ref_counted.hpp>
 
 using namespace godot;
@@ -18,6 +18,10 @@ protected:
                                // interface between this class and Godot's code
 
 public:
+  // This is a useful C++ enum. You can use it like normal within c++, but if
+  // you want to expose it to Godot's interface, use VARIANT_ENUM_CAST as seen
+  // at the bottom of this file, and then bind each enum as seen in
+  // _bind_methods in ExampleEntity.cpp.
   enum ExampleEnum {
     LIGHT = 0,
     DARK = 1,
@@ -35,5 +39,9 @@ public:
   ExampleEntity();
   ~ExampleEntity();
 };
+
+// You must do this in order to communicate a C++ enum to standard ints that you
+// can then use within Godot.
+VARIANT_ENUM_CAST(ExampleEntity::ExampleEnum);
 
 #endif // EXAMPLE_ENTITY_H

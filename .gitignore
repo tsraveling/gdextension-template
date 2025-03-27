@@ -1,5 +1,6 @@
 # Mac OS ignores
 .DS_Store
+*.os
 
 # Prerequisites
 *.d
