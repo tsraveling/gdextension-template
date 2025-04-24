@@ -1,0 +1,11 @@
+[configuration]
+
+entry_symbol = "ext_library_init"
+compatibility_minimum = 4.1
+
+[libraries]
+
+linux.x86_64="res://bin/libext.linux.template_debug.so"
+windows.x86_64="res://bin/libext.windows.template_debug.x86_64.dll"
+macos="res://bin/libext.macos.template_debug.framework"
+

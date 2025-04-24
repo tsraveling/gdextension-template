@@ -12,24 +12,26 @@ AddOption('--compiledb',
           help='Generate compile_commands.json')
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
+# As is, it will include cpp files in src/, and subfolders.
 env.Append(CPPPATH=["src/"])
-sources = Glob("src/*.cpp")
+sources = Glob("src/*.cpp") + Glob("src/**/*.cpp")
 
+# The lib prefix is so that the framework will be recognized as such on MacOS; the others are named for consistency.
 if env["platform"] == "macos":
     library = env.SharedLibrary(
-        "../bin/ext.{}.{}.framework/ext.{}.{}".format(
+        "../bin/libext.{}.{}.framework/libext.{}.{}".format(
             env["platform"], env["target"], env["platform"], env["target"]
         ),
         source=sources,
     )
 elif env["platform"] == "linux":  # for Linux
     library = env.SharedLibrary(
-        "../bin/ext.{}.{}.so".format(env["platform"], env["target"]),
+        "../bin/libext.{}.{}.so".format(env["platform"], env["target"]),
         source=sources,
     )
 else:
     library = env.SharedLibrary(
-        "../bin/ext{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "../bin/libext{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
         source=sources,
     )
 
